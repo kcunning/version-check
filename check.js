@@ -30,7 +30,8 @@ function createRow (package) {
 
 function createTableData(versions) {
     var tableData = []
-    var operators = ["==", ">=", "<=", "<", ">", "~=", "!="]
+    var operators = ["===", "!==", ">==", "<==", "~==",
+        "==", ">=", "<=", "<", ">", "~=", "!="]
     for (var i in versions) {
         // Do we need to split?
         var v = versions[i]
@@ -42,6 +43,10 @@ function createTableData(versions) {
                 p = {package: arr[0], pinned: arr[1]}
                 tableData.push(p)
                 break;
+            }
+            if (j == operators.length-1) {
+                p = {package: v, pinned: "Not pinned!"}
+                tableData.push(p)
             }
         }
     }
