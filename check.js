@@ -17,7 +17,11 @@ function checkVersion (package) {
                 package.diff = compareVersions(package.pinned, package.pypi)
             }
             createRow(package);
-        })  
+        }).fail(function() {
+                package['pypi'] = "Error";
+                package['pinned'] = "Error";
+                createRow(package);
+        }) 
 }
 
 function createRow (package) {
