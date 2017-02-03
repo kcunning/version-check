@@ -16,10 +16,23 @@ function checkVersion (package) {
                 package.diff = compareVersions(package.pinned, package.pypi)
             }
             createRow(package);
-        }).fail(function() {
-                package['pypi'] = "Error";
-                package['pinned'] = "Error";
-                createRow(package);
+        }).fail(function(data) {
+            var underpackage = package.package.replace(/-/g, "_");
+            $.get("https://pypi.python.org/pypi/" + underpackage + "/json/",
+                function(data){
+                    var pypi = data.info.version;
+                    package['pypi'] = pypi;
+                    if (package.pinned == "Not pinned!") {
+                        package.diff = "N/A";
+                    } else {
+                        package.diff = compareVersions(package.pinned, package.pypi)
+                    }
+                    createRow(package);
+                }).fail(function(){
+                    package['pypi'] = "Error";
+                    package['pinned'] = "Error";
+                    createRow(package);
+                })
         }) 
 }
 
