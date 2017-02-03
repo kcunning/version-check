@@ -38,13 +38,15 @@
 				</ul>
 			</div>
 			<div class="col-lg-8">
-				<table id="table" class="col-lg-12 table table-striped">
+				<table id="table" class="col-lg-12 table table-striped"
+					data-sort-name="name"
+               		data-sort-order="desc">
 					<thead>
 						<tr>
-							<th data-field="package">Package</th>
-							<th data-field="pinned">Pinned version</th>
-							<th data-field="pypi">Newest version</th>
-							<th data-field="diff">Difference</th>
+							<th data-field="package" data-sortable="true">Package</th>
+							<th data-field="pinned" data-sortable="true">Pinned version</th>
+							<th data-field="pypi" data-sortable="true">Newest version</th>
+							<th data-field="diff" data-sortable="true">Difference</th>
 						</tr>
 					</thead>
 					<tbody class="table-striped">
