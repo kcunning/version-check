@@ -1,3 +1,22 @@
+var tableData = {
+    columns: [{
+        field: 'package',
+        title: 'Package'
+    }, {
+        field: 'pinned',
+        title: 'Pinned'
+    }, {
+        field: 'pypi',
+        title: 'Latest'
+    }, {
+        field: 'diff',
+        title: 'Difference'
+    }],
+    data: []
+}
+
+$('#table').bootstrapTable(tableData);
+
 function checkVersions (packages) {
     for (var i in packages) {
         checkVersion(packages[i])
@@ -37,14 +56,17 @@ function checkVersion (package) {
 }
 
 function createRow (package) {
-    var t = $("#results");
-    var p = package;
-    t.append(
-        "<tr id='" + p.package +"'><td>" 
-        + p.package +"</td><td>" 
-        + p.pinned + "</td><td>"
-        + p.pypi +  "</td><td>"
-        + p.diff + "</td></tr>")
+    console.log("Package", package)
+    var r = {
+        'package': package.package,
+        'pinned': package.pinned,
+        'pypi': package.pypi,
+        'diff': package.diff,
+    }
+    tableData.data.push(r);
+    // Inefficient AF, but it works. :\
+    $("#table").bootstrapTable("destroy");
+    $("#table").bootstrapTable(tableData);
 }
 
 function compareVersions(pinned, pypi) {
