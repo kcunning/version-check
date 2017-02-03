@@ -12,8 +12,23 @@
 		<header><h1>Version checker</h1></header>
 		<div class="row">
 			<div class="col-lg-4">
+				<p>Paste your requirements file in the text box below, and click "Check your versions!"</p>
 				<textarea rows="20" cols="40" id="versions">Django==1.10</textarea><br>
 				<button id="checkVersions">Check your versions!</button>
+				<h2>Interpreting the results</h2>
+				<p>Differences:</p>
+				<ul>
+					<li>Bug: You're missing a bug release.</li>
+					<li>Feature: You're missing a minor / feature release.</li>
+					<li>Major: Oh no! You're missing a major release!</li>
+					<li>Error: Something went wrong while talking to PyPi.</li>
+				</ul>
+				<p>Some stuff you should know:</p>
+				<ul>
+					<li>This script is doing its best guess as to what you're missing. It's not a replacement for looking at release notes!</li>
+					<li>Most of the time, errors are due to PyPi redirects. For example, <code>prettytable</code> redirects to <code>PrettyTable</code>, and CORS freaks out.</li>
+					<li>Yes, <a href="https://github.com/kcunning/version-check">you can contribute!</a></li>
+				</ul>
 			</div>
 			<div class="col-lg-8">
 				<table id="results" class="col-lg-12 table table-striped">
