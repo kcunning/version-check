@@ -35,6 +35,7 @@ function createRow (package) {
 }
 
 function compareVersions(pinned, pypi) {
+    pinned = pinned.split(";")[0];
     if (pinned === pypi) {
         return "same"
     }
