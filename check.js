@@ -52,11 +52,49 @@ function checkVersion (package) {
                     package['pinned'] = "Error";
                     createRow(package);
                 })
-        }) 
+        })
 }
 
-function createRow (package) {
-    console.log("Package", package)
+$(".download").click(function(){
+    var textFile = "";
+    var length = $('#table').bootstrapTable('getData').length;
+    var type = "";
+    var extension = "requirements";
+
+    for(x=0; x < length; x++){
+        textFile += $('#table').bootstrapTable('getData')[x].package + "==" + $('#table').bootstrapTable('getData')[x].pypi;
+
+        if(x != length - 1){
+            textFile += '\n';
+        }
+    }
+
+    if($(this).data("type") == "csv"){
+        type = "text/csv"
+        extension += ".csv";
+    }else{
+        type = "text/plain";
+        extension += ".txt";
+    }
+
+    var a = document.createElement("a"),
+        file = new Blob([textFile], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, extension);
+    else { // Others
+        var url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = extension;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+});
+
+function createRow(package) {
     var r = {
         'package': package.package,
         'pinned': package.pinned,
@@ -116,9 +154,10 @@ function createTableData(versions) {
 $(document).ready(function() {
   $('#checkVersions').click(
     function () {
+        $('#table').bootstrapTable('removeAll');
         var versions = $("#versions").val().split("\n")
         var tableData = createTableData(versions);
         tableData = checkVersions(tableData);
-
+        $(".btn-block").prop( "disabled", false );
     });
 });
